@@ -15,9 +15,11 @@ MAX_BYTES = 10 * 1024 * 1024  # 10MB
 
 app = FastAPI(title="Cat or Loaf")
 
+CORS_ORIGINS = [os.getenv("CORS_ORIGINS", "https://your-react-domain"), "http://localhost:5173"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "https://your-react-domain"],
+    allow_origins=CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
