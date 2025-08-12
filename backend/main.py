@@ -6,10 +6,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from tempfile import NamedTemporaryFile
 from classifier import classify
 
-MODEL_PATH = "backend" + "/static" + "/models" + "/cat_or_loaf.h5"
-model = tf.keras.models.load_model(MODEL_PATH)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.getenv("MODEL_PATH", os.path.join(BASE_DIR, "static", "models", "cat_or_loaf.h5"))
+model = tf.keras.models.load_model(MODEL_PATH, compile=False)
 
-ALLOWED_TYPES = {"image.jpg", "image/jpeg", "image/png"}
+ALLOWED_TYPES = {"image/jpg", "image/jpeg", "image/png"}
 MAX_BYTES = 10 * 1024 * 1024  # 10MB
 
 app = FastAPI(title="Cat or Loaf")
